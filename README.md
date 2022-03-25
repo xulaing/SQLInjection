@@ -1,6 +1,6 @@
 # Sécurité Informatique | Projet
 
-### Lucie Bottin & Céline Khauv
+## Lucie Bottin & Céline Khauv
 
 Dans le cadre du projet, nous avons réalisé un site web contenant 4 pages : la page principale, la page de connection, la page d'inscription et un dashboard pour l'utilisateur est connecté.<br />
 Il est possible de tester les injections SQL sur le formulaire de connection.
