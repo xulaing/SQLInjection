@@ -40,13 +40,13 @@ app.get("/users/login", checkAuthenticated, (req, res) => {
   res.render("login");
 });
 
-app.get("/users/dashboard", (req, res) => {
+app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
   res.render("dashboard", { user: req.user.name });
 });
 
 app.get("/users/logout", (req, res) => {
-    req.logout();
-    res.render("index", { message: "You have logged out successfully" });
+  req.logout();
+  res.render("index", { message: "You have logged out successfully" });
 });
 
 app.post("/users/register", (req, res) => {
@@ -94,7 +94,7 @@ app.post("/users/register", (req, res) => {
   }
 });
 
-/*
+// Connection sécurisée
 app.post(
   "/users/login",
   passport.authenticate("local", {
@@ -102,31 +102,36 @@ app.post(
     failureRedirect: "/users/login",
     failureFlash: true
   })
-);*/
+);
 
-  app.post('/users/login', function (req, res) {
-    var email = req.body.email; // a valid username is admin
-    var password = req.body.password; // a valid password is admin123
-    var query = "SELECT name FROM users where email = '" + email + "' and password = '" + password + "'";
-  
-    console.log("email: " + email);
-    console.log("password: " + password);
-    console.log('query: ' + query);
-      
-    pool.query(
-      query, (err, response) => {
-        if (err) {
-          throw err;
-        } else if (!response) {
-          res.redirect("/users/login");
-        } else {
-          const user = response.rows[0];
-          res.render("dashboard", { user: user.name })
-        }
-      });
-  
+/*
+// Connection non sécurisée
+app.post("/users/login", function (req, res) {
+  var email = req.body.email; // a valid username is admin
+  var password = req.body.password; // a valid password is admin123
+  var query =
+    "SELECT name FROM users where email = '" +
+    email +
+    "' and password = '" +
+    password +
+    "'";
+
+  console.log("email: " + email);
+  console.log("password: " + password);
+  console.log("query: " + query);
+
+  pool.query(query, (err, response) => {
+    if (err) {
+      throw err;
+    } else if (response.rowCount == 0) {
+      res.redirect("/users/login");
+    } else {
+      const user = response.rows[0];
+      res.render("dashboard", { user: user.name });
+    }
   });
-
+});
+*/
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
