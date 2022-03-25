@@ -9,6 +9,7 @@ Il est possible de tester les injections SQL sur le formulaire de connection.
 
 ## Lancer l'application
 
+- npm install
 - npm run dev
 
 Il est possible que vous devriez installer nodemon : <br />
